@@ -12,23 +12,13 @@ const personSchema = new mongoose.Schema({
         enum: ["Female", "Male"]
     },
     Date_of_Birth: {
-        type: String
+        type: Date
     },
     Email: {
         type: String
     }
 });
 
-/* // parse date before save to db
-personSchema.pre('save',
-    async function(next) {
-        if (this.isNew) {
-            
-        }
-        next();
-    }
-);
-*/
 const personModel = mongoose.model('person', personSchema);
 
 module.exports = personModel;
