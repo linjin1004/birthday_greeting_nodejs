@@ -1,5 +1,6 @@
 const personModel = require("../models/person");
 const moment = require('moment');
+const mysql = require('mysql2');
 
 const simpleMessage = ((req, res) => {
     // assume today is 8/8
@@ -10,13 +11,12 @@ const simpleMessage = ((req, res) => {
         ]}, 
         function(err, people){
             let result_array = [];
-            console.log(err)
             people.forEach(p => {
                 let message = `Subject: Happy birthday!\nHappy birthday, dear ${p.First_Name}!`;
                 console.log(message)
                 result_array.push(message);
             });
-            res.status(200).json({result_array});
+            return res.status(200).json({result_array});
         }
     );
 });
@@ -42,7 +42,7 @@ const messageForDifferentGender = ((req, res) => {
                 console.log(message);
                 result_array.push(message);
             });
-            res.status(200).json({result_array});
+            return res.status(200).json({result_array});
         }
     );
 });
@@ -58,7 +58,7 @@ const messageWithElderPic = ((req, res) => {
                 console.log(message);
                 result_array.push(message);
             });
-            res.status(200).json({result_array});
+            return res.status(200).json({result_array});
         }
     );
 });
@@ -72,20 +72,77 @@ const messageWithFullName = ((req, res) => {
         ]}, 
         function(err, people){
             let result_array = [];
-            console.log(err)
             people.forEach(p => {
                 let message = `Subject: Happy birthday!\nHappy birthday, dear ${p.Last_Name}, ${p.First_Name}!`;
                 console.log(message)
                 result_array.push(message);
             });
-            res.status(200).json({result_array});
+            return res.status(200).json({result_array});
         }
     );
 });
+
+const database_changes = ((req, res) => {
+    // connect to mysql
+    const mysql_user = 'root'; // should not be here, shoudl move to config file and not push to git
+    const mysql_pw = 'root'; // should not be here, shoudl move to config file and not push to git
+
+    var con = mysql.createConnection({
+        host: 'localhost',
+        user: mysql_user,
+        password: mysql_pw,
+        database: 'bday_greeting'
+    });
+
+    con.connect(function(err) {
+        if (err){
+            return res.status(500).json(err);
+        } else {
+            // assume today is 8/8
+            let sql_statement = "SELECT * FROM people WHERE MONTH(Date_of_Birth)='08' and DAY(Date_of_Birth)='08'"
+            con.query(sql_statement, function (err, results, fields) {
+                if (err){
+                    return res.status(500).json(err);
+                }
+                let result_array = [];
+                results.forEach(p => {
+                    let message = `Subject: Happy birthday!\nHappy birthday, dear ${p.First_Name}!`;
+                    console.log(message)
+                    result_array.push(message);
+                });
+                return res.status(200).json({result_array});
+            });
+        }        
+    });
+});
+
+const messageInXml = ((req, res) => {
+    let result = `<?xml version="1.0" encoding="UTF-8"?><root>`;
+    // assume today is 8/8
+    personModel.find({
+        $and: [
+            { $expr: {$eq: [{ $month: "$Date_of_Birth" }, 8]}},
+            { $expr: {$eq: [{ $dayOfMonth: "$Date_of_Birth" }, 8]}}
+        ]}, 
+        function(err, people){
+            people.forEach(p => {
+                let xml_content = `<title>Subject: Happy birthday!</title><content>Happy birthday, dear ${p.First_Name}!</content>`; 
+                console.log(xml_content)
+                result = result + xml_content;
+            });
+            result = result + '</root>';
+            res.header("Content-Type", "text/xml");
+            console.log(result);
+            return res.status(200).send(result);
+        }
+    );
+})
 
 module.exports = {
     simpleMessage,
     messageForDifferentGender,
     messageWithElderPic,
     messageWithFullName,
+    database_changes,
+    messageInXml
 }

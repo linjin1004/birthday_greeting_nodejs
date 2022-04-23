@@ -19,6 +19,7 @@
   "dependencies": {
     "express": "^4.17.3",
     "moment": "^2.29.3",
-    "mongoose": "^6.3.0"
+    "mongoose": "^6.3.0",
+    "mysql2": "^2.3.3"
   }
 }

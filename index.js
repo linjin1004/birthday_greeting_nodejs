@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-process.env.TZ = "GMT"
 
 // mongo db and mongoose 
 const mongoose = require('mongoose');
@@ -13,7 +12,7 @@ mongoose.connect(`mongodb://${db_host}:${db_port}/${db_name}`,
 ).then(() => {
         console.log('mongo db connected');
         // seed db
-        const db_seed = require('./db_seeds/mongodb');
+        let db_seed = require('./db_seeds/mongodb');
         db_seed.creatPersonSeeds(); 
     }
 ).catch((err) => {
