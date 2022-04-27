@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "79c1c809-06f7-4709-acb4-c700ca1bc017",
+		"name": "birthday greeting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "version 1: simple message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response must be valid and have a body\", function () {\r",
+							"     pm.response.to.be.withBody;\r",
+							"     pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response should contain an array with 2 valid items.\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.result_array).to.be.a(\"array\");\r",
+							"    const result_array = responseJson.result_array;\r",
+							"    pm.expect(result_array.length).to.eql(2);\r",
+							"    pm.expect(result_array[0].content).to.eql('Happy birthday, dear Robert!');\r",
+							"    pm.expect(result_array[1].content).to.eql('Happy birthday, dear Sherry!');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/version_1/simple_message",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"version_1",
+						"simple_message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "version 2: message for different gender",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response must be valid and have a body\", function () {\r",
+							"     pm.response.to.be.withBody;\r",
+							"     pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response should contain an array with 2 valid items.\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.result_array).to.be.a(\"array\");\r",
+							"    const result_array = responseJson.result_array;\r",
+							"    pm.expect(result_array.length).to.eql(2);\r",
+							"    pm.expect(result_array[0].content).to.eql('Happy birthday, dear Robert!\\nWe offer special discount 20% off for the following items:\\nWhite Wine, iPhone X');\r",
+							"    pm.expect(result_array[1].content).to.eql('Happy birthday, dear Sherry!\\nWe offer special discount 50% off for the following items:\\nCosmetic, LV Handbags');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/version_2/message_for_different_gender",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"version_2",
+						"message_for_different_gender"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "version 3: message with elder pic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response must be valid and have a body\", function () {\r",
+							"     pm.response.to.be.withBody;\r",
+							"     pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response should contain an array with 1 valid item.\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.result_array).to.be.a(\"array\");\r",
+							"    const result_array = responseJson.result_array;\r",
+							"    pm.expect(result_array.length).to.eql(1);\r",
+							"    pm.expect(result_array[0].content).to.eql('Happy birthday, dear Peter!\\n(A greeting picture here)');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/version_3/message_with_elder_pic",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"version_3",
+						"message_with_elder_pic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "version 4: message with full name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response must be valid and have a body\", function () {\r",
+							"     pm.response.to.be.withBody;\r",
+							"     pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response should contain an array with 2 valid items.\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.result_array).to.be.a(\"array\");\r",
+							"    const result_array = responseJson.result_array;\r",
+							"    pm.expect(result_array.length).to.eql(2);\r",
+							"    pm.expect(result_array[0].content).to.eql('Happy birthday, dear Yen, Robert!');\r",
+							"    pm.expect(result_array[1].content).to.eql('Happy birthday, dear Chen, Sherry!');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/version_4/message_with_full_name",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"version_4",
+						"message_with_full_name"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "version 5: message but database change",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response must be valid and have a body\", function () {\r",
+							"     pm.response.to.be.withBody;\r",
+							"     pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response should contain an array with 2 valid items.\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.result_array).to.be.a(\"array\");\r",
+							"    const result_array = responseJson.result_array;\r",
+							"    pm.expect(result_array.length).to.eql(2);\r",
+							"    pm.expect(result_array[0].content).to.eql('Happy birthday, dear Robert!');\r",
+							"    pm.expect(result_array[1].content).to.eql('Happy birthday, dear Sherry!');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/version_5/database_changes",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"version_5",
+						"database_changes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "version 6: message in xml",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response must be valid and have a body\", function () {\r",
+							"     pm.response.to.be.withBody;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response should contain 2 valid items.\", function () {\r",
+							"    const responseJson = xml2Json(pm.response.text());\r",
+							"    pm.expect(responseJson.root.title).to.be.a(\"array\");\r",
+							"    pm.expect(responseJson.root.content).to.be.a(\"array\");\r",
+							"    const result_array = responseJson.root.content;\r",
+							"    pm.expect(result_array.length).to.eql(2);\r",
+							"    pm.expect(result_array[0]).to.eql('Happy birthday, dear Robert!');\r",
+							"    pm.expect(result_array[1]).to.eql('Happy birthday, dear Sherry!');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/version_6/message_in_xml",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"version_6",
+						"message_in_xml"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

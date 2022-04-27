@@ -12,7 +12,7 @@ const simpleMessage = ((req, res) => {
         function(err, people){
             let result_array = [];
             people.forEach(p => {
-                let message = `Subject: Happy birthday!\nHappy birthday, dear ${p.First_Name}!`;
+                let message = { title: 'Subject: Happy birthday!', content: `Happy birthday, dear ${p.First_Name}!`};
                 console.log(message)
                 result_array.push(message);
             });
@@ -33,11 +33,11 @@ const messageForDifferentGender = ((req, res) => {
         function(err, people){
             let result_array = [];
             people.forEach(p => {
-                let message = `Subject: Happy birthday!\nHappy birthday, dear ${p.First_Name}!\n`;
+                let message = { title: 'Subject: Happy birthday!', content: ''};
                 if(p.Gender == 'Male'){
-                    message += male_msg;
+                    message.content = `Happy birthday, dear ${p.First_Name}!\n${male_msg}`
                 } else if (p.Gender == 'Female'){
-                    message += female_msg;
+                    message.content = `Happy birthday, dear ${p.First_Name}!\n${female_msg}`
                 }
                 console.log(message);
                 result_array.push(message);
@@ -54,7 +54,7 @@ const messageWithElderPic = ((req, res) => {
     personModel.find({ Date_of_Birth: {$lt: forty_nine_years_ago }}, function(err, people){
             let result_array = [];
             people.forEach(p => {
-                let message = `Subject: Happy birthday!\nHappy birthday, dear ${p.First_Name}!\n(A greeting picture here) `;
+                let message = { title: 'Subject: Happy birthday!', content: `Happy birthday, dear ${p.First_Name}!\n(A greeting picture here)`};
                 console.log(message);
                 result_array.push(message);
             });
@@ -73,7 +73,7 @@ const messageWithFullName = ((req, res) => {
         function(err, people){
             let result_array = [];
             people.forEach(p => {
-                let message = `Subject: Happy birthday!\nHappy birthday, dear ${p.Last_Name}, ${p.First_Name}!`;
+                let message = { title: 'Subject: Happy birthday!', content: `Happy birthday, dear ${p.Last_Name}, ${p.First_Name}!`};
                 console.log(message)
                 result_array.push(message);
             });
@@ -84,8 +84,8 @@ const messageWithFullName = ((req, res) => {
 
 const database_changes = ((req, res) => {
     // connect to mysql
-    const mysql_user = 'root'; // should not be here, shoudl move to config file and not push to git
-    const mysql_pw = 'root'; // should not be here, shoudl move to config file and not push to git
+    const mysql_user = 'root'; // should not be here. should move to config file and not push to git
+    const mysql_pw = 'root'; // should not be here. should move to config file and not push to git
 
     var con = mysql.createConnection({
         host: 'localhost',
@@ -106,7 +106,7 @@ const database_changes = ((req, res) => {
                 }
                 let result_array = [];
                 results.forEach(p => {
-                    let message = `Subject: Happy birthday!\nHappy birthday, dear ${p.First_Name}!`;
+                    let message = { title: 'Subject: Happy birthday!', content: `Happy birthday, dear ${p.First_Name}!`};
                     console.log(message)
                     result_array.push(message);
                 });
