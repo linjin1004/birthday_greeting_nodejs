@@ -1,6 +1,6 @@
 const personModel = require("../models/person");
 const moment = require('moment');
-const mysql = require('mysql2');
+const { mysqlConn } = require('../services/mysql');
 
 const simpleMessage = ((req, res) => {
     // assume today is 8/8
@@ -83,36 +83,19 @@ const messageWithFullName = ((req, res) => {
 });
 
 const database_changes = ((req, res) => {
-    // connect to mysql
-    const mysql_user = 'root'; // should not be here. should move to config file and not push to git
-    const mysql_pw = 'root'; // should not be here. should move to config file and not push to git
-
-    var con = mysql.createConnection({
-        host: 'localhost',
-        user: mysql_user,
-        password: mysql_pw,
-        database: 'bday_greeting'
-    });
-
-    con.connect(function(err) {
+    // assume today is 8/8 and select from data from table
+    let sql_statement = "SELECT * FROM people WHERE MONTH(Date_of_Birth)='08' and DAY(Date_of_Birth)='08'"
+    mysqlConn.query(sql_statement, function (err, results, fields) {
         if (err){
             return res.status(500).json(err);
-        } else {
-            // assume today is 8/8
-            let sql_statement = "SELECT * FROM people WHERE MONTH(Date_of_Birth)='08' and DAY(Date_of_Birth)='08'"
-            con.query(sql_statement, function (err, results, fields) {
-                if (err){
-                    return res.status(500).json(err);
-                }
-                let result_array = [];
-                results.forEach(p => {
-                    let message = { title: 'Subject: Happy birthday!', content: `Happy birthday, dear ${p.First_Name}!`};
-                    console.log(message)
-                    result_array.push(message);
-                });
-                return res.status(200).json({result_array});
-            });
-        }        
+        }
+        let result_array = [];
+        results.forEach(p => {
+            let message = { title: 'Subject: Happy birthday!', content: `Happy birthday, dear ${p.First_Name}!`};
+            console.log(message)
+            result_array.push(message);
+        });
+        return res.status(200).json({result_array});
     });
 });
 
